@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .main {
   margin: 60px 0;
 }
@@ -5,7 +7,7 @@
   font-size: 14px;
   width: 938px;
   min-height: 600px;
-  background-color: white;
+  background-color: $white-color;
   display: flex;
   flex-direction: column;
   padding: 0 32px;
@@ -39,7 +41,7 @@
   }
   &_input {
     height: 40px;
-    border: 1px solid #bfbfbf;
+    border: 1px solid $border-color;
     border-radius: 4px;
     padding-left: 6px;
   }
@@ -52,7 +54,7 @@
     outline: 1px solid #d9d9d9;
   }
   &_label {
-    color: black;
+    color: $black-color;
     font-size: 14px;
   }
 
@@ -64,21 +66,21 @@
     height: 40px;
     cursor: pointer;
     &--send {
-      background-color: #1890ff;
-      color: #fff;
+      background-color: $blue-color;
+      color: $white-color;
       width: 320px;
       margin-bottom: 20px;
     }
     &--add {
       background-color: transparent;
-      border: 1px solid #1890ff;
-      color: #1890ff;
+      border: 1px solid $blue-color;
+      color: $blue-color;
       width: 136px;
     }
     &--delete {
       background-color: transparent;
-      border: 1px solid red;
-      color: red;
+      border: 1px solid $red-color;
+      color: $red-color;
       width: 136px;
     }
   }

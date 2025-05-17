@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { CreateArticle } from '../../store/slices/articleSlice'
-
 import ArticleForm from '../form/article/article-form'
 
 const CreateArticles = () => {
@@ -25,7 +24,7 @@ const CreateArticles = () => {
   }
 
   return (
-    <main style={{margin: '60px 0'}}>
+    <main style={{ margin: '60px 0' }}>
       <ArticleForm onSubmit={onSubmit} />
     </main>
   )

@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .main {
   margin-top: 60px;
 }
@@ -51,7 +53,7 @@
     padding-left: 6px;
   }
   &_label {
-    color: black;
+    color: $black-color;
     font-size: 14px;
   }
   &_NDA {
@@ -64,7 +66,7 @@
       font-size: 14px;
       line-height: 22px;
       padding-left: 6px;
-      color: #595959;
+      color: $dark-gray-color;
     }
     input {
       width: 16px;
@@ -75,8 +77,8 @@
     padding: 8px 0;
     margin-top: 21px;
     border-radius: 6px;
-    background-color: #1890ff;
-    color: #fff;
+    background-color: $blue-color;
+    color: $white-color;
     font-size: 16px;
     line-height: 24px;
     width: 100%;
@@ -85,7 +87,7 @@
   &_signin {
     margin-top: 8px;
     text-align: center;
-    color: #8c8c8c;
+    color: $gray-color;
     a {
       text-decoration: none;
     }
@@ -93,9 +95,9 @@
 }
 
 .error_message {
-  color: red;
+  color: $red-color;
 }
 
 .error {
-  border: 2px solid red;
+  border: 2px solid $red-color;
 }

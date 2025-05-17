@@ -1,5 +1,7 @@
+@import '../variables.scss';
+
 header {
-  background-color: white;
+  background-color: $white-color;
   height: 80px;
   display: flex;
   align-items: center;
@@ -9,7 +11,7 @@ header {
     align-items: center;
     text-decoration: none;
     font-size: 18px;
-    color: black;
+    color: $black-color;
     cursor: pointer;
     margin-right: 20px;
     height: 20px;
@@ -29,9 +31,9 @@ header {
   button {
     height: 50px;
     width: 110px;
-    background-color: white;
+    background-color: $white-color;
     font-size: 18px;
-    border: 1px solid black;
+    border: 1px solid $black-color;
     border-radius: 5px;
     cursor: pointer;
   }
@@ -39,8 +41,8 @@ header {
 
 .link_with_auth,
 .link_without_auth {
-  color: #52c41a;
-  border: 1px solid #52c41a;
+  color: $green-color;
+  border: 1px solid $green-color;
   border-radius: 5px;
   display: inline-block;
 }

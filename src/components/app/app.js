@@ -47,7 +47,7 @@ function App() {
             </main>
           }
         />
-         <Route path="/articles/:slug" element={<ArticlePage />} />
+        <Route path="/articles/:slug" element={<ArticlePage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/profile" element={<PrivateRoute element={<EditProfilePage />} />} />

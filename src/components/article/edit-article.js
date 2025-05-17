@@ -41,7 +41,7 @@ const EditArticles = () => {
   }
 
   return (
-    <main style={{margin: '60px 0'}}>
+    <main style={{ margin: '60px 0' }}>
       <ArticleForm onSubmit={onSubmit} defaultValues={defaultValues} />
     </main>
   )

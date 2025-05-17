@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { Spin, Flex } from 'antd'
 
 import Article from '../components/article/article'
 import { fetchArticleBySlug } from '../store/slices/articleSlice'
@@ -15,7 +16,11 @@ const ArticlePage = () => {
   }, [dispatch, slug])
 
   if (!article) {
-    return <div>Загрузка...</div>
+    return (
+      <Flex width="100%" align="center" gap="middle">
+        <Spin style={{ margin: 'auto' }} size="large" />
+      </Flex>
+    )
   }
 
   return (

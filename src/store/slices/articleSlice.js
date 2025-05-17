@@ -1,21 +1,45 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const baseUrl = 'https://blog-platform.kata.academy/api'
+const getToken = (getState) => {
+  const state = getState()
+  return state.user.token
+}
 
-export const fetchArticles = createAsyncThunk('articles/fetchArticles', async ({ page = 1, pageSize = 5 }) => {
-  const offset = (page - 1) * pageSize
-  const response = await fetch(`${baseUrl}/articles?limit=${pageSize}&offset=${offset}`)
-  if (!response.ok) {
-    throw new Error('Ошибка при получении статей: ' + response.statusText)
+export const fetchArticles = createAsyncThunk(
+  'articles/fetchArticles',
+  async ({ page = 1, pageSize = 5 }, { getState }) => {
+    const token = getToken(getState)
+    const offset = (page - 1) * pageSize
+    const headers = {}
+    if (token) {
+      headers['Authorization'] = `Token ${token}`
+    }
+    const response = await fetch(`${baseUrl}/articles?limit=${pageSize}&offset=${offset}`, {
+      method: 'GET',
+      headers: headers,
+    })
+    if (!response.ok) {
+      throw new Error('Ошибка при получении статей: ' + response.statusText)
+    }
+    const articlesData = await response.json()
+    return {
+      articles: articlesData.articles,
+      articlesCount: articlesData.articlesCount,
+    }
   }
-  const articlesData = await response.json()
-  return {
-    articles: articlesData.articles,
-    articlesCount: articlesData.articlesCount,
+)
+
+export const fetchArticleBySlug = createAsyncThunk('articles/fetchArticleBySlug', async (slug, { getState }) => {
+  const token = getToken(getState)
+  const headers = {}
+  if (token) {
+    headers['Authorization'] = `Token ${token}`
   }
-})
-export const fetchArticleBySlug = createAsyncThunk('articles/fetchArticleBySlug', async (slug) => {
-  const response = await fetch(`${baseUrl}/articles/${slug}`)
+  const response = await fetch(`${baseUrl}/articles/${slug}`, {
+    method: 'GET',
+    headers: headers,
+  })
   if (!response.ok) {
     throw new Error('Ошибка при получении статьи: ' + response.statusText)
   }
@@ -26,8 +50,7 @@ export const fetchArticleBySlug = createAsyncThunk('articles/fetchArticleBySlug'
 export const CreateArticle = createAsyncThunk(
   'articles/createArticle',
   async (articleData, { getState, rejectWithValue }) => {
-    const state = getState()
-    const token = state.user.token
+    const token = getToken(getState)
     try {
       const response = await fetch(`${baseUrl}/articles`, {
         method: 'POST',
@@ -50,11 +73,8 @@ export const CreateArticle = createAsyncThunk(
 export const EditArticle = createAsyncThunk(
   'articles/editArticle',
   async ({ slug, articleData }, { getState, rejectWithValue }) => {
-    const state = getState()
-    const token = state.user.token
+    const token = getToken(getState)
     try {
-      console.log('Editing article with slug:', slug, 'and data:', articleData)
-
       const response = await fetch(`${baseUrl}/articles/${slug}`, {
         method: 'PUT',
         headers: {
@@ -73,29 +93,70 @@ export const EditArticle = createAsyncThunk(
     }
   }
 )
-export const DeleteArticle = createAsyncThunk(
-  'articles/deleteArticle',
+export const DeleteArticle = createAsyncThunk('articles/deleteArticle', async (slug, { getState, rejectWithValue }) => {
+  const token = getToken(getState)
+  try {
+    const response = await fetch(`${baseUrl}/articles/${slug}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    if (!response.ok) {
+      const errorData = await response.json()
+      return rejectWithValue(errorData.errors)
+    }
+    return slug
+  } catch (error) {
+    return rejectWithValue(error.message)
+  }
+})
+
+export const FavoriteArticle = createAsyncThunk(
+  'articles/favoriteArticle',
   async (slug, { getState, rejectWithValue }) => {
-    const state = getState();
-    const token = state.user.token;
+    const token = getToken(getState)
     try {
-      const response = await fetch(`${baseUrl}/articles/${slug}`, {
+      const response = await fetch(`${baseUrl}/articles/${slug}/favorite`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Token ${token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      if (!response.ok) {
+        const errorData = await response.json()
+        return rejectWithValue(errorData.errors)
+      }
+      return await response.json()
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
+export const UnfavoriteArticle = createAsyncThunk(
+  'articles/unfavoriteArticle',
+  async (slug, { getState, rejectWithValue }) => {
+    const token = getToken(getState)
+    try {
+      const response = await fetch(`${baseUrl}/articles/${slug}/favorite`, {
         method: 'DELETE',
         headers: {
           Authorization: `Token ${token}`,
           'Content-Type': 'application/json',
         },
-      });
+      })
       if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue(errorData.errors);
+        const errorData = await response.json()
+        return rejectWithValue(errorData.errors)
       }
-      return slug;
+      return await response.json()
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message)
     }
   }
-);
+)
 
 const initialState = {
   articles: [],
@@ -126,6 +187,7 @@ export const articleSlice = createSlice({
         state.status = 'resolved'
         state.articles = action.payload.articles
         state.articlesCount = action.payload.articlesCount
+        state.favorited = action.payload.articles.favorited
         state.isLoading = false
       })
       .addCase(fetchArticles.rejected, (state, action) => {
@@ -180,6 +242,28 @@ export const articleSlice = createSlice({
         state.status = 'error'
         state.error = action.payload
         state.isLoading = false
+      })
+      .addCase(FavoriteArticle.fulfilled, (state, action) => {
+        const updatedArticle = action.payload.article
+        const index = state.articles.findIndex((article) => article.slug === updatedArticle.slug)
+        if (index !== -1) {
+          state.articles[index] = {
+            ...state.articles[index],
+            favorited: true,
+            favoritesCount: updatedArticle.favoritesCount,
+          }
+        }
+      })
+      .addCase(UnfavoriteArticle.fulfilled, (state, action) => {
+        const updatedArticle = action.payload.article
+        const index = state.articles.findIndex((article) => article.slug === updatedArticle.slug)
+        if (index !== -1) {
+          state.articles[index] = {
+            ...state.articles[index],
+            favorited: false,
+            favoritesCount: updatedArticle.favoritesCount,
+          }
+        }
       })
   },
 })

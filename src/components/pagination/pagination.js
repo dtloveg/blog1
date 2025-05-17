@@ -9,21 +9,25 @@ const Paginations = ({ articlesCount }) => {
   const dispatch = useDispatch()
   const currentPage = useSelector((state) => state.article.currentPage)
 
+  const article = useSelector((state) => state.article.article)
+
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page))
     dispatch(fetchArticles({ page, pageSize: 5 }))
   }
 
   return (
-    <Pagination
-      align="center"
-      showSizeChanger={false}
-      total={articlesCount}
-      current={currentPage}
-      pageSize={5}
-      onChange={handlePageChange}
-      style={{ paddingTop: 16, margin: 0, maxWidth: 1010 }}
-    />
+    article && (
+      <Pagination
+        align="center"
+        showSizeChanger={false}
+        total={articlesCount}
+        current={currentPage}
+        pageSize={5}
+        onChange={handlePageChange}
+        style={{ paddingTop: 16, margin: 0, maxWidth: 1010 }}
+      />
+    )
   )
 }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { Spin } from 'antd'
 
 import { fetchArticles } from '../../store/slices/articleSlice'
 import Article from '../article/article'
@@ -14,7 +15,7 @@ const ArticlesList = () => {
     dispatch(fetchArticles({ page: currentPage, pageSize: 5 }))
   }, [dispatch, currentPage])
   if (status === 'loading') {
-    return <span>Загрузка статей...</span>
+    return <Spin size="large" />
   }
 
   if (status === 'error') {
