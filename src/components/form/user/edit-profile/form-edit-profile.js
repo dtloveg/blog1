@@ -94,6 +94,8 @@ const FormEditProfile = () => {
                 })}
                 placeholder="New Password"
               />
+              {errors.password && <p className={classes.error_message}>{errors.password.message}</p>}
+              {serverErrors?.password && <p className={classes.error_message}>Email {serverErrors.password}</p>}
             </div>
             <div className={classes.form_field}>
               <label className={classes.form_label}>Avatar image (url)</label>
@@ -111,6 +113,7 @@ const FormEditProfile = () => {
                 defaultValue={image}
               />
             </div>
+            {errors.image && <p className={classes.error_message}>{errors.image.message}</p>}
           </fieldset>
           <button type="submit" className={classes.form_button}>
             Save

@@ -82,7 +82,7 @@ const userSlice = createSlice({
       state.token = null
       state.username = null
       state.email = null
-      state.image = null
+      state.image = 'https://static.productionready.io/images/smiley-cyrus.jpg'
       localStorage.removeItem('token')
       localStorage.removeItem('username')
       localStorage.removeItem('email')
@@ -117,9 +117,14 @@ const userSlice = createSlice({
         state.token = action.payload.user.token
         state.username = action.payload.user.username
         state.email = action.payload.user.email
+        state.image = action.payload.user.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
         localStorage.setItem('token', action.payload.user.token)
         localStorage.setItem('username', action.payload.user.username)
         localStorage.setItem('email', action.payload.user.email)
+        localStorage.setItem(
+          'image',
+          action.payload.user.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'
+        )
       })
       .addCase(LoginUser.rejected, (state, action) => {
         state.status = 'error'
