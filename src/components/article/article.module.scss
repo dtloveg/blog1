@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+ul {
+  list-style-type: none;
+}
+body {
+  background-color: #ebeef3;
+  font-family: 'Inter UI', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 941px;
+  min-height: 140px;
+  overflow: hidden auto;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-top: 26px;
+
+  &_main {
+    display: flex;
+    flex-direction: row;
+    row-gap: 4px;
+    justify-content: space-between;
+    overflow-wrap: break-word;
+  }
+  &_info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+  }
+  &_full {
+    font-size: 20px;
+    overflow-wrap: break-word;
+    margin-top: 25px;
+  }
+  &_fav-button {
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 28px;
+    cursor: pointer;
+  }
+  &_title {
+    display: flex;
+    line-height: 28px;
+    align-items: center;
+    a {
+      height: 28px;
+      text-decoration: none;
+    }
+    h3 {
+      font-size: 20px;
+      font-weight: inherit;
+      color: #1890ff;
+      padding-right: 13px;
+    }
+    span {
+      color: #000000bf;
+    }
+  }
+  &_description {
+    line-height: 22px;
+    &_gray {
+      padding-top: 12px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  &_tags {
+    display: flex;
+    gap: 8px;
+  }
+  &_tag {
+    height: 14px;
+    padding: 3px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    &_gray {
+      padding: 3px 6px;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+      border-radius: 2px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+  &_like {
+    width: 16px;
+    height: 16px;
+    transition-property: fill;
+    fill: red;
+    padding-right: 3px;
+  }
+}
+
+.person {
+  display: grid;
+  grid-template-areas:
+    'username avatar'
+    'datatime avatar'
+    'button button';
+  grid-template-rows: 28px 22px 35px;
+  grid-template-columns: 90px 50px;
+
+  &_username {
+    grid-area: username;
+    padding-right: 10px;
+    justify-self: end;
+    font-size: 18px;
+  }
+  &_date {
+    grid-area: datatime;
+    padding-right: 10px;
+    justify-self: end;
+    color: gray;
+  }
+  img {
+    grid-area: avatar;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    margin-left: auto;
+  }
+  &_buttons {
+    grid-area: button;
+    margin-top: auto;
+  }
+  &_button {
+    background-color: white;
+    height: 30px;
+    width: 75px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-left: 15px;
+    cursor: pointer;
+    &--delete {
+      border-color: red;
+      color: red;
+          &:focus {
+          background-color: transparent !important;
+          border-color: red;
+          color: red !important;
+      }
+      &:hover {
+          background-color: transparent !important;
+          border-color: red;
+          color: red !important;
+      }
+    }
+    &--edit {
+      border-color: #52c41a;
+      color: #52c41a;
+  
+    }
+  }
+}
+
