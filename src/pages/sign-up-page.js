@@ -5,7 +5,7 @@ import { Spin, Flex } from 'antd'
 import FormSignUp from '../components/form/user/sign-up'
 
 const SignUpPage = () => {
-  const status = useSelector((state) => state.article.status)
+  const status = useSelector((state) => state.user.status)
   if (status === 'loading') {
     return (
       <Flex width="100%" align="center" gap="middle">
