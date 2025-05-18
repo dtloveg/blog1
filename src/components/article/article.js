@@ -48,7 +48,7 @@ const Article = ({ article, showBody }) => {
             <a href={`/articles/${slug}`}>
               <h3>{title}</h3>
             </a>
-            <button className={classes['card_fav-button']} onClick={handleFavoriteClick}>
+            <button className={classes['card_fav-button']} onClick={handleFavoriteClick} disabled={!isLogIn}>
               <svg viewBox="0 -1 16 16" className={classes.card_like} xmlns="http://www.w3.org/2000/svg">
                 <path
                   d={

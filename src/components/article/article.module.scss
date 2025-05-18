@@ -51,6 +51,11 @@ body {
     justify-content: space-between;
     height: 28px;
     cursor: pointer;
+      &:disabled {
+    opacity: 0.75;
+    cursor: not-allowed; 
+    pointer-events: none; 
+  }
   }
   &_title {
     display: flex;

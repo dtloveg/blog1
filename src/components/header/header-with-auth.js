@@ -1,6 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { logOut } from '../../store/slices/userSlice'
 
@@ -8,10 +9,13 @@ import classes from './header.module.scss'
 
 const HeaderWithAuth = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const username = useSelector((state) => state.user.username)
   const image = useSelector((state) => state.user.image)
+
   const handleLogOut = () => {
     dispatch(logOut())
+    navigate('/sign-in')
   }
   return (
     <header className={classes.header}>
