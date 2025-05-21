@@ -28,7 +28,7 @@ const Paginations = ({ articlesCount }) => {
       current={currentPage}
       pageSize={5}
       onChange={handlePageChange}
-      style={{ paddingTop: 16, margin: 0, maxWidth: 1010 }}
+      style={{ paddingTop: 16, margin: 0, marginBottom: 16, maxWidth: 1010 }}
     />
   )
 }

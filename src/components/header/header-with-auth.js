@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import { logOut } from '../../store/slices/userSlice'
 
@@ -19,16 +19,16 @@ const HeaderWithAuth = () => {
   }
   return (
     <header className={classes.header}>
-      <a href={'/articles'}>
+      <Link to="/articles">
         <span>Realworld Blog</span>
-      </a>
-      <a className={classes.link_with_auth} href={'/new-article'}>
+      </Link>
+      <Link className={classes.link_with_auth} to="/new-article">
         <span>Create article</span>
-      </a>
-      <a className={classes.personal_info} href={'/profile'}>
+      </Link>
+      <Link className={classes.personal_info} to="/profile">
         <span className={classes.person_username}>{username}</span>
         <img src={image} alt={`${username} avatar`} />
-      </a>
+      </Link>
       <button onClick={handleLogOut}>Log Out</button>
     </header>
   )

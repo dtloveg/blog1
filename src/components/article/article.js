@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import propTypes from 'prop-types'
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -28,26 +28,30 @@ const Article = ({ article, showBody }) => {
     navigate(`/articles/${slug}/edit`)
   }
 
-  const handleFavoriteClick = () => {
+  const handleFavoriteClick = React.useCallback(() => {
     if (favorited) {
       dispatch(UnfavoriteArticle(slug)).then(() => {
-        dispatch(fetchArticleBySlug(slug))
+        if (showBody) {
+          dispatch(fetchArticleBySlug(slug))
+        }
       })
     } else {
       dispatch(FavoriteArticle(slug)).then(() => {
-        dispatch(fetchArticleBySlug(slug))
+        if (showBody) {
+          dispatch(fetchArticleBySlug(slug))
+        }
       })
     }
-  }
+  }, [dispatch, favorited, slug, showBody])
 
   return (
     <article className={classes.card}>
       <div className={classes.card_main}>
         <div className={classes.card_info}>
           <div className={classes.card_title}>
-            <a href={`/articles/${slug}`}>
+            <Link to={`/articles/${slug}`}>
               <h3>{title}</h3>
-            </a>
+            </Link>
             <button className={classes['card_fav-button']} onClick={handleFavoriteClick} disabled={!isLogIn}>
               <svg viewBox="0 -1 16 16" className={classes.card_like} xmlns="http://www.w3.org/2000/svg">
                 <path

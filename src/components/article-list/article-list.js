@@ -5,6 +5,8 @@ import { Spin } from 'antd'
 import { fetchArticles } from '../../store/slices/articleSlice'
 import Article from '../article/article'
 
+import classes from './article-list.module.scss'
+
 const ArticlesList = () => {
   const articles = useSelector((state) => state.article.articles)
   const status = useSelector((state) => state.article.status)
@@ -24,7 +26,7 @@ const ArticlesList = () => {
 
   return (
     <section>
-      <ul>
+      <ul className={classes.list}>
         {articles.map((article) => (
           <li key={article.slug}>
             <Article article={article} />

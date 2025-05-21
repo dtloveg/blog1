@@ -13,6 +13,7 @@ import EditProfilePage from '../../pages/edit-profile-page'
 import NewArticlePage from '../../pages/new-article-page'
 import EditArticlePage from '../../pages/edit-article-page'
 import PrivateRoute from '../../route/private-route'
+import AuthorRoute from '../../route/author-route'
 
 import classes from './app.module.scss'
 
@@ -52,7 +53,7 @@ function App() {
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/profile" element={<PrivateRoute element={<EditProfilePage />} />} />
         <Route path="/new-article" element={<PrivateRoute element={<NewArticlePage />} />} />
-        <Route path="/articles/:slug/edit" element={<PrivateRoute element={<EditArticlePage />} />} />
+        <Route path="/articles/:slug/edit" element={<AuthorRoute element={<EditArticlePage />} />} />
       </Routes>
     </>
   )

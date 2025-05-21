@@ -246,7 +246,11 @@ export const articleSlice = createSlice({
       .addCase(FavoriteArticle.fulfilled, (state, action) => {
         const updatedArticle = action.payload.article
         const index = state.articles.findIndex((article) => article.slug === updatedArticle.slug)
-        if (index !== -1) {
+        if (
+          index !== -1 &&
+          (state.articles[index].favorited !== updatedArticle.favorited ||
+            state.articles[index].favoritesCount !== updatedArticle.favoritesCount)
+        ) {
           state.articles[index] = {
             ...state.articles[index],
             favorited: true,

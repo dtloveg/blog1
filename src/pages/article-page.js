@@ -29,6 +29,7 @@ const ArticlePage = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginTop: '26px',
       }}
     >
       <Article article={article} showBody={true} />

@@ -24,8 +24,6 @@ body {
   background-color: $white-color;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
   padding: 20px;
-  margin-top: 26px;
-  margin-bottom: 25px;
 
   &_main {
     display: flex;
@@ -140,6 +138,8 @@ body {
     margin-top: auto;
     display: flex;
     align-items: start;
+    justify-content: end;
+    gap: 15px;
   }
   &_button {
     background-color: $white-color;
@@ -147,7 +147,6 @@ body {
     width: 75px;
     border: 1px solid $black-color;
     border-radius: 5px;
-    margin-left: 15px;
     cursor: pointer;
     &--delete {
       border-color: $red-color;
